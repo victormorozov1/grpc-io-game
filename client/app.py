@@ -8,7 +8,7 @@ class App(Game):
     def __init__(self):
         super().__init__(500, 500)
         self.client = GameClient()
-        self.pictires = {'R': pygame.image.load('pictures\\rock.png'), 'P': pygame.image.load('pictures\\other_hero.png')}
+        self.pictires = {'R': pygame.image.load('client\\pictures\\rock.png'), 'P': pygame.image.load('client\\pictures\\other_hero.png')}
 
     def on_message_recieved(self, message):
         self.field.remove_all_objects()
