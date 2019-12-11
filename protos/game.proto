@@ -4,27 +4,23 @@ package grpc;
 
 message Nothing {}
 
-message Field{
+message Id{
+    string s = 1;
+}
+
+message GameInformation{
     int32 x = 1;
     int32 y = 2;
     string field = 3;
 }
 
 message Step{
-    int32 move_x = 1;
-    int32 move_y = 2;
-}
-
-message Command{
-    string s = 1;
-}
-
-message ServerMessage{
-    int32 x = 1;
-    int32 y = 2;
-    string s = 3;
+    string id = 1;
+    int32 move_x = 2;
+    int32 move_y = 3;
 }
 
 service Game{
-    rpc Stream (stream Command) returns (stream ServerMessage);
+    rpc GetField (Id) returns (stream GameInformation);
+    rpc MakeStep (Step) returns (Nothing);
 }

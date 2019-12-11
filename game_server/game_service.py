@@ -7,40 +7,49 @@ class GameService(game_grpc.GameServicer):
     def __init__(self):
         self.a = 1
         self.b = 1
-        self.field = [(22, 33, 'R'), (222, 333, 'R')]
+        self.field = [('R', 22, 33), ('R', 222, 333)]
         self.n = 10
         self.m = 10
+        self.session = dict()
+        self.sleep = 0.1
 
     def free_cell(self):
         return 100, 300
 
     def field_str(self):
-        ret = ';'.join(['|'.join([str(i) for i in j]) for j in self.field])
-        print('String field returned', ret)
+        ret = ''
+        for i in range(len(self.field)):
+            el = self.field[i]
+            if el[0] == 'R':
+                ret += str(el[1]) + '|' + str(el[2]) + '|' + 'R'
+            elif el[0] == 'P':
+                ret += str(self.session[el[1]]['x']) + '|' + str(self.session[el[1]]['y']) + '|' + 'P'
+            if i != len(self.field) - 1:
+                ret += ';'
         return ret
 
-    def Stream(self, request_iterator, context):
+    def GetField(self, request, context):
         print('New player connected')
+
         x, y = self.free_cell()
-        print('New player coords:', x, y)
-        self.field.append((x, y, 'P'))
-        try:
-            yield game_proto.ServerMessage(x=0, y=0, s='0')
-            print('First answer returned')
-        except BaseException as e:
-            print('Error in sending first answer ' + str(e))
-        for request in request_iterator:
-            self.field[x][y] = '.'
-            try:
-                print('Command =', command)
-                command = [int(i) for i in request.split(';')]
-                x += command[0]
-                y += command[1]
-            except BaseException:
-                print('Error in command')
+        self.session[request.s] = dict()
+        session = self.session[request.s]
+        session['x'] = x
+        session['y'] = y
+        print('Coords of new player', x, y)
 
-            self.field[x][y] = 'P'
-            yield game_proto.Field(x=x, y=y, field=self.field_str())
-            sleep(0.1)
+        self.field.append(('P', request.s))
 
-        print('Stream: end')
+        while context.is_active():
+            yield game_proto.GameInformation(x=session['x'], y=session['y'], field=self.field_str())
+            sleep(self.sleep)
+
+    def MakeStep(self, request, context):
+        print('making step')
+        print('id =', request.id)
+        session = self.session[request.id]
+        print('session get')
+        session['x'] += request.move_x
+        session['y'] += request.move_y
+        print('step maked, new coords', session['x'], session['y'])
+        return game_proto.Nothing()

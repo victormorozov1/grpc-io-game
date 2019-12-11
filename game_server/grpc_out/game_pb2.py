@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='grpc',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\ngame.proto\x12\x04grpc\"\t\n\x07Nothing\",\n\x05\x46ield\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\x12\r\n\x05\x66ield\x18\x03 \x01(\t\"&\n\x04Step\x12\x0e\n\x06move_x\x18\x01 \x01(\x05\x12\x0e\n\x06move_y\x18\x02 \x01(\x05\"\x14\n\x07\x43ommand\x12\t\n\x01s\x18\x01 \x01(\t\"0\n\rServerMessage\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\x12\t\n\x01s\x18\x03 \x01(\t28\n\x04Game\x12\x30\n\x06Stream\x12\r.grpc.Command\x1a\x13.grpc.ServerMessage(\x01\x30\x01\x62\x06proto3')
+  serialized_pb=_b('\n\ngame.proto\x12\x04grpc\"\t\n\x07Nothing\"\x0f\n\x02Id\x12\t\n\x01s\x18\x01 \x01(\t\"6\n\x0fGameInformation\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\x12\r\n\x05\x66ield\x18\x03 \x01(\t\"2\n\x04Step\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0e\n\x06move_x\x18\x02 \x01(\x05\x12\x0e\n\x06move_y\x18\x03 \x01(\x05\x32\\\n\x04Game\x12-\n\x08GetField\x12\x08.grpc.Id\x1a\x15.grpc.GameInformation0\x01\x12%\n\x08MakeStep\x12\n.grpc.Step\x1a\r.grpc.Nothingb\x06proto3')
 )
 
 
@@ -50,98 +50,15 @@ _NOTHING = _descriptor.Descriptor(
 )
 
 
-_FIELD = _descriptor.Descriptor(
-  name='Field',
-  full_name='grpc.Field',
+_ID = _descriptor.Descriptor(
+  name='Id',
+  full_name='grpc.Id',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='x', full_name='grpc.Field.x', index=0,
-      number=1, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='y', full_name='grpc.Field.y', index=1,
-      number=2, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='field', full_name='grpc.Field.field', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=31,
-  serialized_end=75,
-)
-
-
-_STEP = _descriptor.Descriptor(
-  name='Step',
-  full_name='grpc.Step',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='move_x', full_name='grpc.Step.move_x', index=0,
-      number=1, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='move_y', full_name='grpc.Step.move_y', index=1,
-      number=2, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=77,
-  serialized_end=115,
-)
-
-
-_COMMAND = _descriptor.Descriptor(
-  name='Command',
-  full_name='grpc.Command',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='s', full_name='grpc.Command.s', index=0,
+      name='s', full_name='grpc.Id.s', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -159,34 +76,34 @@ _COMMAND = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=117,
-  serialized_end=137,
+  serialized_start=31,
+  serialized_end=46,
 )
 
 
-_SERVERMESSAGE = _descriptor.Descriptor(
-  name='ServerMessage',
-  full_name='grpc.ServerMessage',
+_GAMEINFORMATION = _descriptor.Descriptor(
+  name='GameInformation',
+  full_name='grpc.GameInformation',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='x', full_name='grpc.ServerMessage.x', index=0,
+      name='x', full_name='grpc.GameInformation.x', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='y', full_name='grpc.ServerMessage.y', index=1,
+      name='y', full_name='grpc.GameInformation.y', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='s', full_name='grpc.ServerMessage.s', index=2,
+      name='field', full_name='grpc.GameInformation.field', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -204,15 +121,59 @@ _SERVERMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=139,
-  serialized_end=187,
+  serialized_start=48,
+  serialized_end=102,
+)
+
+
+_STEP = _descriptor.Descriptor(
+  name='Step',
+  full_name='grpc.Step',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='grpc.Step.id', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='move_x', full_name='grpc.Step.move_x', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='move_y', full_name='grpc.Step.move_y', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=104,
+  serialized_end=154,
 )
 
 DESCRIPTOR.message_types_by_name['Nothing'] = _NOTHING
-DESCRIPTOR.message_types_by_name['Field'] = _FIELD
+DESCRIPTOR.message_types_by_name['Id'] = _ID
+DESCRIPTOR.message_types_by_name['GameInformation'] = _GAMEINFORMATION
 DESCRIPTOR.message_types_by_name['Step'] = _STEP
-DESCRIPTOR.message_types_by_name['Command'] = _COMMAND
-DESCRIPTOR.message_types_by_name['ServerMessage'] = _SERVERMESSAGE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Nothing = _reflection.GeneratedProtocolMessageType('Nothing', (_message.Message,), {
@@ -222,12 +183,19 @@ Nothing = _reflection.GeneratedProtocolMessageType('Nothing', (_message.Message,
   })
 _sym_db.RegisterMessage(Nothing)
 
-Field = _reflection.GeneratedProtocolMessageType('Field', (_message.Message,), {
-  'DESCRIPTOR' : _FIELD,
+Id = _reflection.GeneratedProtocolMessageType('Id', (_message.Message,), {
+  'DESCRIPTOR' : _ID,
   '__module__' : 'game_pb2'
-  # @@protoc_insertion_point(class_scope:grpc.Field)
+  # @@protoc_insertion_point(class_scope:grpc.Id)
   })
-_sym_db.RegisterMessage(Field)
+_sym_db.RegisterMessage(Id)
+
+GameInformation = _reflection.GeneratedProtocolMessageType('GameInformation', (_message.Message,), {
+  'DESCRIPTOR' : _GAMEINFORMATION,
+  '__module__' : 'game_pb2'
+  # @@protoc_insertion_point(class_scope:grpc.GameInformation)
+  })
+_sym_db.RegisterMessage(GameInformation)
 
 Step = _reflection.GeneratedProtocolMessageType('Step', (_message.Message,), {
   'DESCRIPTOR' : _STEP,
@@ -235,20 +203,6 @@ Step = _reflection.GeneratedProtocolMessageType('Step', (_message.Message,), {
   # @@protoc_insertion_point(class_scope:grpc.Step)
   })
 _sym_db.RegisterMessage(Step)
-
-Command = _reflection.GeneratedProtocolMessageType('Command', (_message.Message,), {
-  'DESCRIPTOR' : _COMMAND,
-  '__module__' : 'game_pb2'
-  # @@protoc_insertion_point(class_scope:grpc.Command)
-  })
-_sym_db.RegisterMessage(Command)
-
-ServerMessage = _reflection.GeneratedProtocolMessageType('ServerMessage', (_message.Message,), {
-  'DESCRIPTOR' : _SERVERMESSAGE,
-  '__module__' : 'game_pb2'
-  # @@protoc_insertion_point(class_scope:grpc.ServerMessage)
-  })
-_sym_db.RegisterMessage(ServerMessage)
 
 
 
@@ -258,16 +212,25 @@ _GAME = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=189,
-  serialized_end=245,
+  serialized_start=156,
+  serialized_end=248,
   methods=[
   _descriptor.MethodDescriptor(
-    name='Stream',
-    full_name='grpc.Game.Stream',
+    name='GetField',
+    full_name='grpc.Game.GetField',
     index=0,
     containing_service=None,
-    input_type=_COMMAND,
-    output_type=_SERVERMESSAGE,
+    input_type=_ID,
+    output_type=_GAMEINFORMATION,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='MakeStep',
+    full_name='grpc.Game.MakeStep',
+    index=1,
+    containing_service=None,
+    input_type=_STEP,
+    output_type=_NOTHING,
     serialized_options=None,
   ),
 ])
