@@ -16,10 +16,11 @@ class GameService(game_grpc.GameServicer):
         self.session = dict()
         self.sleep = 0.01
 
-    def free(self, x, y):
+    def free(self, x, y, ignore=[]):
         for i in self.field:
-            if diff(x, y, i.x, i.y) < CELL_SZ:
-                return False
+            if i not in ignore:
+                if abs(x - i.x) < CELL_SZ and abs(y - i.y) < CELL_SZ:
+                    return False
         return True
 
     def free_cell(self):
@@ -30,7 +31,6 @@ class GameService(game_grpc.GameServicer):
 
     def field_str(self):
         ret = FIELD_SEPARATOR.join([str(i) for i in self.field])
-        print('field to str', ret)
         return ret
 
     def GetField(self, request, context):
@@ -47,11 +47,21 @@ class GameService(game_grpc.GameServicer):
             yield game_proto.GameInformation(x=player.x, y=player.y, field=self.field_str())
             sleep(self.sleep)
 
+    def _make_step(self, obj, move_x, move_y):  # Делает шаг по 1 пикселю
+        print('making step on', move_x, move_y)
+        obj.x += move_x
+        obj.y += move_y
+        if not self.free(obj.x, obj.y, ignore=[obj]):
+            obj.x -= move_x
+            obj.y -= move_y
+
     def MakeStep(self, request, context):
         print('making step')
         print('id =', request.id)
         obj = self.session[request.id]
         print('session get')
-        obj.x += request.move_x
-        obj.y += request.move_y
+        for i in range(abs(request.move_x)):
+            self._make_step(obj, abs(request.move_x) // request.move_x, 0)
+        for i in range(abs(request.move_y)):
+            self._make_step(obj, 0, abs(request.move_y) // request.move_y)
         return game_proto.Nothing()

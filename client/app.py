@@ -1,6 +1,7 @@
 from client.game_client import GameClient
 import pygame
 from client.game.game import Game
+from client.constants import *
 
 
 class App(Game):
@@ -22,10 +23,10 @@ class App(Game):
 
     def handle_pressed(self, key):
         if key == pygame.K_LEFT:
-            self.client.make_step(-2, 0)
+            self.client.make_step(-SPEED, 0)
         elif key == pygame.K_RIGHT:
-            self.client.make_step(2, 0)
+            self.client.make_step(SPEED, 0)
         elif key == pygame.K_UP:
-            self.client.make_step(0, -2)
+            self.client.make_step(0, -SPEED)
         elif key == pygame.K_DOWN:
-            self.client.make_step(0, 2)
+            self.client.make_step(0, SPEED)
