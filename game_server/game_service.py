@@ -47,6 +47,8 @@ class GameService(game_grpc.GameServicer):
             yield game_proto.GameInformation(x=player.x, y=player.y, field=self.field_str())
             sleep(self.sleep)
 
+        self.field.remove(player)
+
     def _make_step(self, obj, move_x, move_y):  # Делает шаг по 1 пикселю
         print('making step on', move_x, move_y)
         obj.x += move_x
