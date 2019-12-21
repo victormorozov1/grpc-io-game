@@ -36,7 +36,7 @@ class Game:
         pass
 
     def run(self):
-        win = pygame.display.set_mode((self.field.szx, self.field.szy))
+        win = pygame.display.set_mode((0, 0), pygame.RESIZABLE)
         self.running = True
         while self.running:
             self.handle_events()
