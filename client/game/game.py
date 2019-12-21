@@ -7,8 +7,8 @@ class Game:
     def __init__(self, bg=(255, 255, 255), sleep=0.01):
         pygame.init()
         display_size = pygame.display.Info()
-        szx, szy = display_size.current_w, display_size.current_h
-        self.field = Field(szx, szy, bg=bg)
+        self.szx, self.szy = display_size.current_w, display_size.current_h
+        self.field = Field(self.szx, self.szy, bg=bg)
         self.sleep = sleep
 
     def handle_event_exit(self, ev):

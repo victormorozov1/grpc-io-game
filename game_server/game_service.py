@@ -6,15 +6,29 @@ from game_server.constants import *
 from game_server.functions import *
 
 
+def WIN_SZ_X(args):
+    pass
+
+
+def WIN_SZ_Y(args):
+    pass
+
+
 class GameService(game_grpc.GameServicer):
     def __init__(self):
         self.a = 1
         self.b = 1
-        self.field = [Object(300, 200, 'R')]
+        self.num_of_start_objects = 100
+        self.get_start_field()
         self.n = 10
         self.m = 10
         self.session = dict()
         self.sleep = 0.01
+
+    def get_start_field(self):
+        self.field = []
+        for i in range(self.num_of_start_objects):
+            self.field.append(Object(*self.free_cell(), 'R'))
 
     def free(self, x, y, ignore=[]):
         for i in self.field:
@@ -24,27 +38,44 @@ class GameService(game_grpc.GameServicer):
         return True
 
     def free_cell(self):
-        x, y = randrange(WIN_SZ_X - CELL_SZ), randrange(WIN_SZ_Y - CELL_SZ)
+        x, y = randrange(FIELD_SZ_X - CELL_SZ), randrange(FILED_SZ_Y - CELL_SZ)
         while not self.free(x, y):
-            x, y = randrange(WIN_SZ_X - CELL_SZ), randrange(WIN_SZ_Y - CELL_SZ)
+            x, y = randrange(FIELD_SZ_X - CELL_SZ), randrange(FILED_SZ_Y - CELL_SZ)
         return x, y
 
-    def field_str(self):
-        ret = FIELD_SEPARATOR.join([str(i) for i in self.field])
-        return ret
+    def field_str(self, client_win_size, player_id):
+        player_pos = self.session[player_id].x, self.session[player_id].y
+        lx, rx = player_pos[0] - client_win_size[0] // 2, player_pos[0] + client_win_size[0] // 2
+        ly, ry = player_pos[1] - client_win_size[1] // 2, player_pos[1] + client_win_size[1] // 2
+        ret = ''
+
+        for i in self.field:
+            print(i)
+            if i.x in range(lx - CELL_SZ, rx + CELL_SZ) and i.y in range(ly - CELL_SZ, ry + CELL_SZ):
+                if i.id == player_id:
+                    i.name = 'Y'
+                    ret += FIELD_SEPARATOR + str(i)
+                    i.name = 'P'
+                else:
+                    ret += FIELD_SEPARATOR + str(i)
+
+        return ret.strip(FIELD_SEPARATOR)
 
     def GetField(self, request, context):
         print('New player connected')
 
         x, y = self.free_cell()
-        self.session[request.s] = Object(x, y, 'P')
+        player_id = request.s
+        print('coords of new player', x, y)
+        client_win_size = request.szx, request.szy
+        print('client win size', client_win_size)
+        self.session[request.s] = Object(x, y, 'P', id=player_id)
         player = self.session[request.s]
-        print('Coords of new player', x, y)
 
         self.field.append(player)
 
         while context.is_active():
-            yield game_proto.GameInformation(x=player.x, y=player.y, field=self.field_str())
+            yield game_proto.GameInformation(x=player.x, y=player.y, field=self.field_str(client_win_size, player_id))
             sleep(self.sleep)
 
         self.field.remove(player)

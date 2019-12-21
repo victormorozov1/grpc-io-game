@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='grpc',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\ngame.proto\x12\x04grpc\"\t\n\x07Nothing\"\x0f\n\x02Id\x12\t\n\x01s\x18\x01 \x01(\t\"6\n\x0fGameInformation\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\x12\r\n\x05\x66ield\x18\x03 \x01(\t\"2\n\x04Step\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0e\n\x06move_x\x18\x02 \x01(\x05\x12\x0e\n\x06move_y\x18\x03 \x01(\x05\x32\\\n\x04Game\x12-\n\x08GetField\x12\x08.grpc.Id\x1a\x15.grpc.GameInformation0\x01\x12%\n\x08MakeStep\x12\n.grpc.Step\x1a\r.grpc.Nothingb\x06proto3')
+  serialized_pb=_b('\n\ngame.proto\x12\x04grpc\"\t\n\x07Nothing\")\n\x02Id\x12\t\n\x01s\x18\x01 \x01(\t\x12\x0b\n\x03szx\x18\x02 \x01(\x05\x12\x0b\n\x03szy\x18\x03 \x01(\x05\"6\n\x0fGameInformation\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\x12\r\n\x05\x66ield\x18\x03 \x01(\t\"2\n\x04Step\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0e\n\x06move_x\x18\x02 \x01(\x05\x12\x0e\n\x06move_y\x18\x03 \x01(\x05\x32\\\n\x04Game\x12-\n\x08GetField\x12\x08.grpc.Id\x1a\x15.grpc.GameInformation0\x01\x12%\n\x08MakeStep\x12\n.grpc.Step\x1a\r.grpc.Nothingb\x06proto3')
 )
 
 
@@ -64,6 +64,20 @@ _ID = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='szx', full_name='grpc.Id.szx', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='szy', full_name='grpc.Id.szy', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -77,7 +91,7 @@ _ID = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=31,
-  serialized_end=46,
+  serialized_end=72,
 )
 
 
@@ -121,8 +135,8 @@ _GAMEINFORMATION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=48,
-  serialized_end=102,
+  serialized_start=74,
+  serialized_end=128,
 )
 
 
@@ -166,8 +180,8 @@ _STEP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=104,
-  serialized_end=154,
+  serialized_start=130,
+  serialized_end=180,
 )
 
 DESCRIPTOR.message_types_by_name['Nothing'] = _NOTHING
@@ -212,8 +226,8 @@ _GAME = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=156,
-  serialized_end=248,
+  serialized_start=182,
+  serialized_end=274,
   methods=[
   _descriptor.MethodDescriptor(
     name='GetField',

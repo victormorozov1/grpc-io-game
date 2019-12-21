@@ -6,6 +6,8 @@ message Nothing {}
 
 message Id{
     string s = 1;
+    int32 szx = 2;
+    int32 szy = 3;
 }
 
 message GameInformation{
