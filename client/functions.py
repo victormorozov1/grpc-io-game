@@ -7,7 +7,6 @@ def open_picture(way):
     try:
         return pygame.image.load(way)
     except BaseException as e:
-        print('!!!!!!!!!!!!!!!!!!!', e)
         return pygame.image.load('client/' + way)
 
 

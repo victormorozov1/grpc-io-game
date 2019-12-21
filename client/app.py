@@ -7,7 +7,7 @@ from client.functions import *
 
 class App(Game):
     def __init__(self):
-        super().__init__(500, 500)
+        super().__init__()
         self.client = GameClient()
         self.pictires = {'R': open_picture('rock.png'), 'P': open_picture('other_hero.png')}
 

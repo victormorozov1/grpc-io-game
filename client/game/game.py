@@ -4,7 +4,10 @@ from time import sleep
 
 
 class Game:
-    def __init__(self, szx, szy, bg=(255, 255, 255), sleep=0.01):
+    def __init__(self, bg=(255, 255, 255), sleep=0.01):
+        pygame.init()
+        display_size = pygame.display.Info()
+        szx, szy = display_size.current_w, display_size.current_h
         self.field = Field(szx, szy, bg=bg)
         self.sleep = sleep
 
@@ -33,7 +36,6 @@ class Game:
         pass
 
     def run(self):
-        pygame.init()
         win = pygame.display.set_mode((self.field.szx, self.field.szy))
         self.running = True
         while self.running:
