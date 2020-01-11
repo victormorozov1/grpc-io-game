@@ -30,12 +30,6 @@ class App(Game):
         self.client.start_listen_messages(self.on_message_recieved, self.szx, self.szy)
         self.run()
 
-    def handle_pressed(self, key):
-        if key == pygame.K_LEFT:
-            self.client.make_step(-SPEED, 0)
-        elif key == pygame.K_RIGHT:
-            self.client.make_step(SPEED, 0)
-        elif key == pygame.K_UP:
-            self.client.make_step(0, -SPEED)
-        elif key == pygame.K_DOWN:
-            self.client.make_step(0, SPEED)
+    def game_iteration(self):
+        x, y = pygame.mouse.get_pos()
+        self.client.make_step(x - self.szx // 2, y - self.szy // 2)

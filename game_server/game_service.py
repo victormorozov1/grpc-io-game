@@ -7,14 +7,6 @@ from game_server.functions import *
 from math import sqrt, floor, sin, pi
 
 
-def WIN_SZ_X(args):
-    pass
-
-
-def WIN_SZ_Y(args):
-    pass
-
-
 class GameService(game_grpc.GameServicer):
     def __init__(self):
         self.a = 1
@@ -26,6 +18,10 @@ class GameService(game_grpc.GameServicer):
         self.session = dict()
         self.sleep = 0.01
         self.moving = dict()
+
+    def game_iteration(self):
+        for id in self.session.keys():
+            self.make_step(id)
 
     def get_start_field(self):
         self.field = []
@@ -77,40 +73,46 @@ class GameService(game_grpc.GameServicer):
         self.field.append(player)
 
         while context.is_active():
-            self.make_step(player_id)
-            self.moving[player_id] = [0, 0]
             yield game_proto.GameInformation(x=player.x, y=player.y, field=self.field_str(client_win_size, player_id))
             sleep(self.sleep)
 
         self.field.remove(player)
 
-    def _make_step(self, obj, move_x, move_y):  # Делает шаг по 1 пикселю
+    def make_step_by_pixel(self, obj, move_x, move_y):  # Делает шаг по 1 пикселю
         obj.x += move_x
         obj.y += move_y
         if not self.free(obj.x, obj.y, ignore=[obj]):
             obj.x -= move_x
             obj.y -= move_y
 
+    def get_move(self, player_id):
+        player = self.session[player_id]
+        x1, y1 = player.x, player.y
+        x2, y2 = self.moving[player_id]
+        dx, dy = abs(x2 - x1), abs(y2 - y1)
+
+        if dx == 0:
+            dx = 0.0000001
+        k = dy / dx
+
+        move_x = sqrt(MAX_SPEED ** 2 / (k ** 2 + 1)) * sign(x2 - x1)
+        move_y = abs(move_x) * k * sign(y2 - y1)
+
+        return int(move_x), int(move_y)
+
     def make_step(self, player_id):
         global move_x, move_y
 
         obj = self.session[player_id]
-        move_x, move_y = self.moving[player_id]
+        move_x, move_y = self.get_move(player_id)
 
-        if move_x ** 2 + move_y ** 2 > MAX_SPEED ** 2:
-            k = floor(MAX_SPEED * sin(pi / 4))
-            print('k =', k)
-            move_x, move_y = abs(move_x) // move_x * k, abs(move_y) // move_y * k
-            print(move_x, move_y)
-
-        for i in range(abs(self.moving[player_id][0])):
-            self._make_step(obj, abs(move_x) // move_x, 0)
-        for i in range(abs(self.moving[player_id][1])):
-            self._make_step(obj, 0, abs(move_y) // move_y)
+        for i in range(abs(move_x)):
+            self.make_step_by_pixel(obj, abs(move_x) // move_x, 0)
+        for i in range(abs(move_y)):
+            self.make_step_by_pixel(obj, 0, abs(move_y) // move_y)
 
     def MakeStep(self, request, context):
-        print('making step')
-        print('id =', request.id)
-        self.moving[request.id][0] += request.move_x
-        self.moving[request.id][1] += request.move_y
+        player = self.session[request.id]
+        self.moving[request.id][0] = player.x + request.move_x
+        self.moving[request.id][1] = player.y + request.move_y
         return game_proto.Nothing()

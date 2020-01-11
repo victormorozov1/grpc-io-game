@@ -27,5 +27,4 @@ class GameClient:
             self._on_message_receive(message)
 
     def make_step(self, move_x, move_y):
-        print('client: making step', move_x, move_y)
         self._game_service.MakeStep(game_proto.Step(id=self.id, move_x=move_x, move_y=move_y))

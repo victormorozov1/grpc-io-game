@@ -23,6 +23,6 @@ message Step{
 }
 
 service Game{
-    rpc GetField (Id) returns (stream GameInformation);
+    rpc GetField (Id) returns (GameInformation);
     rpc MakeStep (Step) returns (Nothing);
 }
