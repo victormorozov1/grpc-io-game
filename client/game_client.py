@@ -13,6 +13,7 @@ class GameClient:
         self._game_service = game_grpc.GameStub(self._channel)
         self.move_x = 0
         self.move_y = 0
+        self.connected = False
 
     def start_listen_messages(self, message_received, szx, szy):
         print('starting listening for messages')
@@ -25,8 +26,9 @@ class GameClient:
         self.id = random_string(10)
         # print('new id =', self.id)
         for message in self._game_service.GetField(game_proto.Id(s=self.id, szx=self.szx, szy=self.szy)):
-            # print('new message')
+            self.connected = True
             self._on_message_receive(message)
 
     def make_step(self, move_x, move_y):
-        self._game_service.MakeStep(game_proto.Step(id=self.id, move_x=move_x, move_y=move_y))
+        if self.connected:
+            self._game_service.MakeStep(game_proto.Step(id=self.id, move_x=move_x, move_y=move_y))
