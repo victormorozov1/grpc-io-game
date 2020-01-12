@@ -11,7 +11,7 @@ class GameService(game_grpc.GameServicer):
     def __init__(self):
         self.a = 1
         self.b = 1
-        self.num_of_start_objects = 30
+        self.num_of_start_objects = 100
         self.get_start_field()
         self.n = 10
         self.m = 10

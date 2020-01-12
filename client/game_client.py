@@ -23,7 +23,9 @@ class GameClient:
 
     def _listen_for_messages(self):
         self.id = random_string(10)
+        # print('new id =', self.id)
         for message in self._game_service.GetField(game_proto.Id(s=self.id, szx=self.szx, szy=self.szy)):
+            # print('new message')
             self._on_message_receive(message)
 
     def make_step(self, move_x, move_y):
