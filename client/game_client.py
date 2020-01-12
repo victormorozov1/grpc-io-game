@@ -6,7 +6,7 @@ from client.functions import *
 
 
 class GameClient:
-    def __init__(self, port=5000, host='127.0.0.1'):
+    def __init__(self, port=5000, host='shgk.me'):
         self._port = port
         self._host = host
         self._channel = grpc.insecure_channel(f'{self._host}:{self._port}')
