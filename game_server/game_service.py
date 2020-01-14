@@ -16,7 +16,7 @@ class GameService(game_grpc.GameServicer):
         self.n = 10
         self.m = 10
         self.session = dict()
-        self.sleep = 0.01
+        self.sleep = 0.0001
         self.moving = dict()
 
     def game_iteration(self):
